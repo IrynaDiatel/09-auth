@@ -32,13 +32,21 @@ export default function SignInPage() {
       <form onSubmit={handleSubmit}>
         <label>
           Email
-          <input value={email} onChange={(e) => setEmail(e.target.value)} />
+          <input
+            name="email"
+            type="email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
         </label>
 
         <label>
           Password
           <input
+            name="password"
             type="password"
+            required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />

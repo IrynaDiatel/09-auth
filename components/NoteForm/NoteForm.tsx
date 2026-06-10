@@ -6,7 +6,7 @@ import { useQueryClient } from "@tanstack/react-query";
 
 import css from "./NoteForm.module.css";
 
-import { createNote } from "../../services/noteService";
+import { createNote } from "@/lib/api/clientApi";
 import type { NoteTag } from "../../types/note";
 
 import { useNoteStore } from "@/lib/store/noteStore";

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/lib/store/authStore";
@@ -36,22 +36,28 @@ export default function EditProfilePage() {
           <Image src={user.avatar} alt="avatar" width={120} height={120} />
 
           <div>
-            <label>
-              Username:
-              <input
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-              />
-            </label>
+            <label htmlFor="username">Username:</label>
+            <input
+              id="username"
+              name="username"
+              type="text"
+              required
+              value={username}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setUsername(e.target.value)
+              }
+            />
           </div>
 
           <p>Email: {user.email}</p>
 
           <div>
-            <button onClick={handleSave} disabled={saving}>
+            <button type="button" onClick={handleSave} disabled={saving}>
               Save
             </button>
-            <button onClick={() => router.push("/profile")}>Cancel</button>
+            <button type="button" onClick={() => router.back()}>
+              Cancel
+            </button>
           </div>
         </div>
       )}

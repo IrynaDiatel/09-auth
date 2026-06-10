@@ -15,7 +15,6 @@ export const publicRoutes = [
 ];
 
 export const config = {
-  // example matcher — used by middleware or proxy logic
   matcher: [
     "/profile/:path*",
     "/notes/:path*",
@@ -24,8 +23,33 @@ export const config = {
   ],
 };
 
-// Minimal proxy handler required by Next.js when a `proxy.ts` file exists.
-// This simply forwards requests (no-op). Implement auth checks here if needed.
+function isAuthenticated(cookieHeader: string | null) {
+  if (!cookieHeader) return false;
+  return /accessToken=|refreshToken=/.test(cookieHeader);
+}
+
+function isPrivatePath(path: string) {
+  return privateRoutes.some((route) => path === route || path.startsWith(`${route}/`));
+}
+
+function isPublicPath(path: string) {
+  return publicRoutes.includes(path);
+}
+
 export function proxy(request: Request) {
+  const url = new URL(request.url);
+  const cookieHeader = request.headers.get("cookie");
+  const authenticated = isAuthenticated(cookieHeader);
+
+  if (isPrivatePath(url.pathname) && !authenticated) {
+    const signInUrl = new URL("/sign-in", request.url);
+    return NextResponse.redirect(signInUrl);
+  }
+
+  if (isPublicPath(url.pathname) && authenticated) {
+    const profileUrl = new URL("/profile", request.url);
+    return NextResponse.redirect(profileUrl);
+  }
+
   return NextResponse.next();
 }

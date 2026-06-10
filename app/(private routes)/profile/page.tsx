@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Image from "next/image";
 import { getMe } from "@/lib/api/serverApi";
 import type { Metadata } from "next";
@@ -16,7 +17,7 @@ export default async function ProfilePage() {
     <main>
       <div>
         <h1>Profile Page</h1>
-        <button>Edit Profile</button>
+        <Link href="/profile/edit">Edit Profile</Link>
       </div>
 
       <div>
