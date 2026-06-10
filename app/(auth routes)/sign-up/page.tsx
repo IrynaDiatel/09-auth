@@ -51,11 +51,4 @@ export default function SignUpPage() {
     </div>
   );
 }
-export default function SignUpPage() {
-  return (
-    <main>
-      <h1>Sign Up</h1>
-      {/* Компонент Sign Up буде реалізований пізніше */}
-    </main>
-  );
-}
+// removed duplicate stub export
